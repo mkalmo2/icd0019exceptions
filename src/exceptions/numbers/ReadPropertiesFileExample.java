@@ -8,8 +8,11 @@ import java.util.Properties;
 public class ReadPropertiesFileExample {
 
     public static void main(String[] args) {
+
+        String lang = "en";
+
         String filePath = String.format(
-                "src/exceptions/numbers/numbers_en.properties");
+                "src/exceptions/numbers/numbers_%s.properties", lang);
 
         Properties properties = new Properties();
         FileInputStream is = null;

@@ -14,6 +14,7 @@ public class MyFileResource {
     }
 
     public static void setData(Integer data) {
+        throwOnRead = false;
         dataInMemory = data;
     }
 
