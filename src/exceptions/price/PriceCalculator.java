@@ -2,9 +2,9 @@ package exceptions.price;
 
 public class PriceCalculator {
 
-    public Double calculatePrice() {
+    public double calculatePrice() {
 
-        Double basePrice = calculateBasePrice();
+        double basePrice = calculateBasePrice();
 
         if (basePrice == -1) {
             return -1D;
@@ -13,16 +13,16 @@ public class PriceCalculator {
         return basePrice * (1 + getVat());
     }
 
-    private Double getVat() {
+    private double getVat() {
         return 0.2;
     }
 
-    private Double calculateBasePrice() {
+    private double calculateBasePrice() {
         // some complex calculation that produces 100 as net cost
         @SuppressWarnings("PMD.PrematureDeclaration")
-        Double netCost = 100D;
+        double netCost = 100D;
 
-        Integer profitConstant = readProfitConstant();
+        int profitConstant = readProfitConstant();
 
         if (profitConstant == -1) {
             return -1D;
@@ -31,7 +31,7 @@ public class PriceCalculator {
         return netCost + (0.1 * profitConstant * netCost);
     }
 
-    private Integer readProfitConstant() {
+    private int readProfitConstant() {
         // read constant from file
         // return -1 if some error happens
 
