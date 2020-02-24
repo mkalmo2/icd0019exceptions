@@ -13,7 +13,7 @@ import java.util.Map;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class Tests {
+public class NumberConverterTests {
 
     @Test(expected = MissingLanguageFileException.class)
     public void selectingMissingLanguageThrows() {
@@ -31,19 +31,31 @@ public class Tests {
     }
 
     @Test
-    public void canConvertNumbersUpTo20ToEnglish() {
-        assertCanConvertNumbersUpTo(20, "en");
+    public void canConvertNumbersToEnglish() {
+        NumberConverter converter = new NumberConverter("en");
+
+        assertThat(converter.numberInWords(0), is("zero"));
+
+        assertThat(converter.numberInWords(1), is("one"));
+
+        assertThat(converter.numberInWords(13), is("thirteen"));
+
+        assertThat(converter.numberInWords(123), is("one hundred twenty-three"));
     }
 
     @Test
-    public void canConvertNumbersUpTo20ToEstonian() {
-        assertCanConvertNumbersUpTo(20, "et");
+    public void canConvertNumbersUpTo130ToEnglish() {
+        assertCanConvertNumbersUpTo(130, "en");
     }
 
-    @Test // 4 points instead of 5 if this test fails
-    public void canConvertNumbersUpTo130() {
-        assertCanConvertNumbersUpTo(130, "en");
+    @Test
+    public void canConvertNumbersUpTo130ToEstonian() {
         assertCanConvertNumbersUpTo(130, "et");
+    }
+
+    @Test
+    public void canConvertNumbersUpTo130ToCustomLanguage() {
+        assertCanConvertNumbersUpTo(130, "cu");
     }
 
     private void assertCanConvertNumbersUpTo(int upperBound, String lang) {
@@ -76,5 +88,6 @@ public class Tests {
 
         map.put("en", Files.readAllLines(Paths.get(String.format(template, "en"))));
         map.put("et", Files.readAllLines(Paths.get(String.format(template, "et"))));
+        map.put("cu", Files.readAllLines(Paths.get(String.format(template, "cu"))));
     }
 }

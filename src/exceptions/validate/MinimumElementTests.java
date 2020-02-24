@@ -10,9 +10,9 @@ public class MinimumElementTests {
     @Test
     public void findsMinimumFromArrayOfNumbers() {
 
-        assertThat(MinimumElement.minimumElement(new Integer[] { 1, 3 }), is(1));
+        assertThat(MinimumElement.minimumElement(new int[] { 1, 3 }), is(1));
 
-        assertThat(MinimumElement.minimumElement(new Integer[] { 1, 0 }), is(0));
+        assertThat(MinimumElement.minimumElement(new int[] { 1, 0 }), is(0));
     }
 
 }

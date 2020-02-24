@@ -1,18 +1,15 @@
 package exceptions.numbers;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 public class ReadPropertiesFileExample {
 
     public static void main(String[] args) {
-
-        String lang = "en";
-
-        String filePath = String.format(
-                "src/exceptions/numbers/numbers_%s.properties", lang);
+        String filePath = "src/exceptions/numbers/numbers_en.properties";
 
         Properties properties = new Properties();
         FileInputStream is = null;
@@ -21,18 +18,28 @@ public class ReadPropertiesFileExample {
             is = new FileInputStream(filePath);
 
             InputStreamReader reader = new InputStreamReader(
-                    is, Charset.forName("UTF-8"));
+                    is, StandardCharsets.UTF_8);
 
             properties.load(reader);
         } catch (Exception e) {
             // handle exceptions
         } finally {
-            // close input stream
+            close(is);
         }
 
         System.out.println(properties.containsKey(String.valueOf(1)));
         System.out.println(properties.getProperty(String.valueOf(1)));
 
+    }
+
+    private static void close(FileInputStream is) {
+        if (is == null) {
+            return;
+        }
+
+        try {
+            is.close();
+        } catch (IOException ignore) {}
     }
 
 }
