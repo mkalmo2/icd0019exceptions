@@ -4,7 +4,9 @@ import java.util.List;
 
 public class FilteringPager {
 
+    @SuppressWarnings("PMD.UnusedPrivateField")
     private final SimplePager dataSource;
+    @SuppressWarnings("PMD.UnusedPrivateField")
     private final int pageSize;
 
     public FilteringPager(SimplePager dataSource, int pageSize) {

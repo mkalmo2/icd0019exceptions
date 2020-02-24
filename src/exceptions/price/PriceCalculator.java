@@ -19,6 +19,7 @@ public class PriceCalculator {
 
     private Double calculateBasePrice() {
         // some complex calculation that produces 100 as net cost
+        @SuppressWarnings("PMD.PrematureDeclaration")
         Double netCost = 100D;
 
         Integer profitConstant = readProfitConstant();
