@@ -3,6 +3,7 @@ package exceptions.price;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.is;
 
 public class PriceCalculatorTest {
@@ -13,7 +14,7 @@ public class PriceCalculatorTest {
 
         double price = new PriceCalculator().calculatePrice();
 
-        assertThat(price, is(144));
+        assertThat(price, is(closeTo(144, 0)));
     }
 
     @Test
@@ -22,7 +23,7 @@ public class PriceCalculatorTest {
 
         double price = new PriceCalculator().calculatePrice();
 
-        assertThat(price, is(-1));
+        assertThat(price, is(closeTo(-1, 0)));
     }
 
     @Test
@@ -31,7 +32,7 @@ public class PriceCalculatorTest {
 
         double price = new PriceCalculator().calculatePrice();
 
-        assertThat(price, is(-1));
+        assertThat(price, is(closeTo(-1, 0)));
     }
 
 }
