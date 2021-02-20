@@ -11,8 +11,7 @@ import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.*;
 
 public class FilteringPagerTests {
 
@@ -89,6 +88,23 @@ public class FilteringPagerTests {
             assertThat(pager.getPreviousPage(), is(memoryPager.getPreviousPage()));
             assertThat(pager.getCurrentPage(), is(memoryPager.getCurrentPage()));
         }
+    }
+
+    @Test
+    public void shouldNotCallSimplePagerTooOften() {
+        SimplePagerWithCounter simplePager = new SimplePagerWithCounter(getSampleInput(), 4);
+        FilteringPager pager = new FilteringPager(simplePager, 3);
+
+        for (int i = 0; i < 6; i++) {
+            pager.getNextPage();
+            pager.getCurrentPage();
+        }
+
+        for (int i = 0; i < 5; i++) {
+            pager.getPreviousPage();
+        }
+
+        assertThat(simplePager.getPageRequestCount(), is(lessThan(100)));
     }
 
     @Test
