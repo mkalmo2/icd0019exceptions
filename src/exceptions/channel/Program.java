@@ -11,10 +11,10 @@ public class Program {
 //        program.provider.makeItThrowMissingConstantException();
 //        program.provider.makeItThrowCorruptConfigurationException();
 
-        program.run(7); // 7 is arbitrary value
+        program.main(7); // 7 is arbitrary value
     }
 
-    public void run(int input) {
+    public void main(int input) {
         double result = calculate(input);
 
         String formatted = format(String.valueOf(result));
