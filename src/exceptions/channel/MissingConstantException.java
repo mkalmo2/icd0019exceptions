@@ -1,5 +1,4 @@
-package exceptions.price;
+package exceptions.channel;
 
 public class MissingConstantException extends RuntimeException {
-
 }
