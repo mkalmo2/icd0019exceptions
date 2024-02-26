@@ -18,7 +18,7 @@ public class ReadPropertiesFileExample {
             is = new FileInputStream(filePath);
 
             InputStreamReader reader = new InputStreamReader(
-                    is, StandardCharsets.UTF_8);
+                    is, StandardCharsets.ISO_8859_1);
 
             properties.load(reader);
         } catch (Exception e) {
