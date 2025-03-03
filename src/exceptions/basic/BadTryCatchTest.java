@@ -11,8 +11,10 @@ public class BadTryCatchTest {
     public void findsStringsWithNoDuplicateLetters() {
 
         assertTrue(Code.containsSingleLetters("abc"));
+
         assertFalse(Code.containsSingleLetters("aabc"));
-        assertTrue(Code.containsSingleLetters("abc"));
+
+        assertFalse(Code.containsSingleLetters("aba"));
 
         // unexpected result
         assertTrue(Code.containsSingleLetters(null));
