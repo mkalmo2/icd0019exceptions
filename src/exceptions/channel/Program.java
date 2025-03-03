@@ -2,7 +2,7 @@ package exceptions.channel;
 
 public class Program {
 
-    ConstantProvider provider = new ConstantProvider();
+    /* default */ ConstantProvider provider = new ConstantProvider();
 
     public void run(int input) {
         double result = calculate(input);

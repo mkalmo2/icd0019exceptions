@@ -39,7 +39,7 @@ public class ReadPropertiesFileExample {
 
         try {
             is.close();
-        } catch (IOException ignore) {}
+        } catch (IOException ignored) {}
     }
 
 }

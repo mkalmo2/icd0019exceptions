@@ -15,6 +15,7 @@ public class ConstantProviderTests {
         assertThat(multiplier).is(closeTo(1.5));
     }
 
+    @Test
     public void canThrowMissingConstantException() {
         ConstantProvider provider = new ConstantProvider();
 
@@ -25,6 +26,7 @@ public class ConstantProviderTests {
                 () -> provider.getMultiplier());
     }
 
+    @Test
     public void canThrowCorruptConfigurationException() {
         ConstantProvider provider = new ConstantProvider();
 
