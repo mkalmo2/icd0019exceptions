@@ -1,6 +1,12 @@
 package exceptions.basic;
 
-public class Resource {
+import java.io.IOException;
+
+/**
+ * This is a class for simulating file manipulation.
+ * No need to change this.
+ */
+public class FakeFile {
 
     private boolean isOpen = false;
     private boolean throwOnRead = false;
@@ -10,13 +16,13 @@ public class Resource {
         isOpen = true;
     }
 
-    public String read() {
+    public String read() throws IOException {
         if (!isOpen) {
-            throw new IllegalStateException("resource is not open");
+            throw new IOException("resource is not open");
         }
 
         if (throwOnRead) {
-            throw new RuntimeException("error while reading");
+            throw new IOException("error on reading info");
         }
 
         return data;
@@ -31,12 +37,12 @@ public class Resource {
     }
 
 
-    public Resource throwOnRead() {
+    public FakeFile throwOnRead() {
         throwOnRead = true;
         return this;
     }
 
-    public Resource setData(String data) {
+    public FakeFile setData(String data) {
         this.data = data;
         return this;
     }

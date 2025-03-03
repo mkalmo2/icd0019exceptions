@@ -4,17 +4,7 @@ public class Program {
 
     ConstantProvider provider = new ConstantProvider();
 
-    public static void main(String[] args) {
-
-        Program program = new Program();
-
-//        program.provider.makeItThrowMissingConstantException();
-//        program.provider.makeItThrowCorruptConfigurationException();
-
-        program.main(7); // 7 is arbitrary value
-    }
-
-    public void main(int input) {
+    public void run(int input) {
         double result = calculate(input);
 
         String formatted = format(String.valueOf(result));

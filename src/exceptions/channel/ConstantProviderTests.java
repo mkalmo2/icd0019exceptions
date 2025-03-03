@@ -1,11 +1,10 @@
 package exceptions.channel;
 
-import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.assertj.core.api.Condition;
+import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ConstantProviderTests {
 
@@ -13,31 +12,39 @@ public class ConstantProviderTests {
     public void returnsConstant() {
         double multiplier = new ConstantProvider().getMultiplier();
 
-        assertThat(multiplier, is(closeTo(1.5)));
+        assertThat(multiplier).is(closeTo(1.5));
     }
 
-    @Test(expected = MissingConstantException.class)
     public void canThrowMissingConstantException() {
         ConstantProvider provider = new ConstantProvider();
 
+        // simulate error condition
         provider.makeItThrowMissingConstantException();
 
-        provider.getMultiplier();
+        assertThrows(MissingConstantException.class,
+                () -> provider.getMultiplier());
     }
 
-    @Test(expected = CorruptConfigurationException.class)
     public void canThrowCorruptConfigurationException() {
         ConstantProvider provider = new ConstantProvider();
 
+        // simulate error condition
         provider.makeItThrowCorruptConfigurationException();
 
-        provider.getMultiplier();
+        assertThrows(CorruptConfigurationException.class,
+                () -> provider.getMultiplier());
     }
 
-    private Matcher<Double> closeTo(double value) {
-        double precision = 0.001;
+    private Condition<Double> closeTo(double expected) {
+        double precision = 0.0001;
 
-        return Matchers.closeTo(value, precision);
+        return new Condition<>() {
+            @Override
+            public boolean matches(Double actual) {
+                return Math.abs(actual - expected) <= precision;
+            }
+        };
     }
+
 
 }

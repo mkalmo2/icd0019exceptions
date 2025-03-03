@@ -1,6 +1,6 @@
 package exceptions.translate;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ConfigurationLoaderTests {
 
@@ -8,7 +8,7 @@ public class ConfigurationLoaderTests {
     public void exceptionTranslationExample() throws Exception {
         String configPath = "./";
 
-        new ConfigurationLoader().loadConfiguration(configPath);
+        new ConfigurationLoader().readConfiguration(configPath);
     }
 
 }

@@ -1,32 +1,34 @@
 package exceptions.basic;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TryCatchSampleTests {
 
     @Test
-    public void readingSucceeds() {
-        Resource resource = new Resource().setData("stuff");
+    public void readingSucceedsExample() {
+        // prepare fake file to return value "stuff" when reading from it.
+        // testing normal case when the reading is successful
+        FakeFile file = new FakeFile().setData("stuff");
 
-        String data = new TryCatchSample().readDataFrom(resource);
+                                            // use the fake fail
+        String data = new Code().readDataFrom(file);
 
-        assertThat(data, is("stuff"));
-        assertThat("opened resources must be closed",
-                resource.isClosed(), is(true));
+        assertThat(data).isEqualTo("stuff"); // check that our code read the data from the file
+        assertTrue(file.isClosed()); // check that the file was closed
     }
 
     @Test
-    public void readingThrows() {
-        Resource resource = new Resource().throwOnRead();
+    public void readingThrowsExample() {
+        // prepare fake file to throw an exception when reading from it.
+        FakeFile file = new FakeFile().throwOnRead();
 
-        String data = new TryCatchSample().readDataFrom(resource);
+                                                   // use the fake file
+        String data = new Code().readDataFrom(file);
 
-        assertThat(data, is("someDefaultValue"));
-        assertThat("opened resources must be closed",
-                resource.isClosed(), is(true));
+        assertThat(data).isEqualTo("some default value"); // check that our code returns the default value
+        assertTrue(file.isClosed());  // check that the file was closed
     }
-
 }

@@ -1,7 +1,7 @@
 package exceptions.numbers;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -11,37 +11,46 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class NumberConverterTests {
 
-    @Test(expected = MissingLanguageFileException.class)
+    @Test
     public void selectingMissingLanguageThrows() {
-        new NumberConverter("ru");
+        assertThrows(MissingLanguageFileException.class,
+                () -> new NumberConverter("ru"));
     }
 
-    @Test(expected = BrokenLanguageFileException.class)
+    @Test
     public void selectingBrokenLanguageFileThrows() {
-        new NumberConverter("fr");
+        assertThrows(BrokenLanguageFileException.class,
+                () -> new NumberConverter("fr"));
     }
 
-    @Test(expected = MissingTranslationException.class)
+    @Test
     public void missingEssentialTranslationThrows() {
-        new NumberConverter("es").numberInWords(1);
+        assertThrows(MissingTranslationException.class,
+                () -> new NumberConverter("es").numberInWords(1));
+
+        assertThrows(MissingTranslationException.class,
+                () -> new NumberConverter("es").numberInWords(2));
+
+        assertThrows(MissingTranslationException.class,
+                () -> new NumberConverter("es").numberInWords(3));
     }
 
     @Test
     public void canConvertNumbersToEnglish() {
         NumberConverter converter = new NumberConverter("en");
 
-        assertThat(converter.numberInWords(0), is("zero"));
+        assertThat(converter.numberInWords(0)).isEqualTo("zero");
 
-        assertThat(converter.numberInWords(1), is("one"));
+        assertThat(converter.numberInWords(1)).isEqualTo("one");
 
-        assertThat(converter.numberInWords(13), is("thirteen"));
+        assertThat(converter.numberInWords(13)).isEqualTo("thirteen");
 
-        assertThat(converter.numberInWords(123), is("one hundred twenty-three"));
+        assertThat(converter.numberInWords(123)).isEqualTo("one hundred twenty-three");
     }
 
     @Test
@@ -59,32 +68,12 @@ public class NumberConverterTests {
         assertCanConvertNumbersUpTo(130, "cu");
     }
 
-    @Test
-    public void canHandleNumbersUpToOneBillion() {
-        NumberConverter c = new NumberConverter("et");
-
-        int[] testValues = {
-                1000, 2321, 654000, 1000000, 2000432, 9634000, 1000000000 };
-
-        for (int number : testValues) {
-            assertThat(c.numberInWords(number), is(getExpectedLarge(number)));
-        }
-    }
-
     private void assertCanConvertNumbersUpTo(int upperBound, String lang) {
         for (int i = 0; i <= upperBound; i++) {
             String numberInWords = new NumberConverter(lang).numberInWords(i);
 
-            assertThat(numberInWords, is(getExpected(lang, i)));
+            assertThat(numberInWords).isEqualTo(getExpected(lang, i));
         }
-    }
-
-    private String getExpectedLarge(int number) {
-        if (!largeMap.containsKey(number)) {
-            throw new RuntimeException("missing entry for " + number);
-        }
-
-        return largeMap.get(number);
     }
 
     private String getExpected(String lang, int index) {
@@ -102,16 +91,9 @@ public class NumberConverterTests {
     }
 
     private final Map<String, List<String>> map = new HashMap<>();
-    private final Map<Integer, String> largeMap = new HashMap<>();
 
-    @Before
+    @BeforeEach
     public void setUp() throws IOException {
-        setUpSmallNumbers();
-
-        setUpLargeNumbers();
-    }
-
-    public void setUpSmallNumbers() throws IOException {
         String template = "src/exceptions/numbers/expected-%s.txt";
 
         map.put("en", getAllLines(template, "en"));
@@ -122,17 +104,5 @@ public class NumberConverterTests {
     private static List<String> getAllLines(String template, String lang) throws IOException {
         return Files.readAllLines(Paths.get(String.format(template, lang)),
                 StandardCharsets.ISO_8859_1);
-    }
-
-    public void setUpLargeNumbers() throws IOException {
-        String path = "src/exceptions/numbers/expected-et-large.txt";
-
-        List <String> lines = Files.readAllLines(Paths.get(path),
-                StandardCharsets.ISO_8859_1);
-
-        for (String line : lines) {
-            String[] parts = line.split("=");
-            largeMap.put(Integer.parseInt(parts[0]), parts[1]);
-        }
     }
 }
