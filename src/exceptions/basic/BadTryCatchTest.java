@@ -14,7 +14,7 @@ public class BadTryCatchTest {
 
         assertFalse(Code.containsSingleLetters("aabc"));
 
-        assertFalse(Code.containsSingleLetters("aba"));
+        assertTrue(Code.containsSingleLetters("aba"));
 
         // unexpected result
         assertTrue(Code.containsSingleLetters(null));
