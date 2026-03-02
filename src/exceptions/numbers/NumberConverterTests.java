@@ -103,6 +103,6 @@ public class NumberConverterTests {
 
     private static List<String> getAllLines(String template, String lang) throws IOException {
         return Files.readAllLines(Paths.get(String.format(template, lang)),
-                StandardCharsets.ISO_8859_1);
+                StandardCharsets.UTF_8);
     }
 }
